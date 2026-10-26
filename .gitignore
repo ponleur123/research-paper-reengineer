@@ -1,0 +1,31 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+venv/
+
+# Research artifacts, datasets, and local model weights
+recon/
+data/
+checkpoints/
+*.ckpt
+*.pth
+*.pt
+*.safetensors
+*.gguf
+*.onnx
+*.npy
+*.npz
+
+# Secrets and local config
+.env
+.env.*
+!.env.example
+
+# Editor / OS
+.DS_Store
+.idea/
+.vscode/
