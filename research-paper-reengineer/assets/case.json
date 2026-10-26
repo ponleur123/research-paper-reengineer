@@ -1,0 +1,13 @@
+{
+  "title": "REPLACE_WITH_PAPER_OR_COMPONENT_TITLE",
+  "goal": "architecture-reconstruction",
+  "target_component": null,
+  "paper": {"title": null, "url": null, "doi": null, "version": null},
+  "supplement": null,
+  "repository": {"url": null, "commit": null},
+  "checkpoint": {"path": null, "sha256": null, "format": null},
+  "dataset": {"name": null, "version": null, "split": null, "evaluation_protocol": null},
+  "environment": {"python": null, "pytorch": null, "cuda": null, "seed": null},
+  "highest_gate_passed": null,
+  "notes": "Keep assumptions and missing sources explicit."
+}
