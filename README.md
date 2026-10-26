@@ -38,18 +38,3 @@ This is an **agent workflow skill** and helper scripts, not an autonomous model-
 
 - Agent Skills spec: https://agentskills.io/specification
 - REA original project: https://github.com/morluto/rea
-
-## Development and tests
-
-The project contains a portable `SKILL.md`, reference playbooks, templates, Python helper scripts and smoke tests. There is no runtime service or mandatory REA dependency.
-
-```bash
-python -m pip install numpy
-python -m unittest discover -s tests -v
-```
-
-The bundled workflows include a GitHub Actions check that runs these tests on pushes and pull requests. Python standard-library scripts work without NumPy except array comparisons.
-
-## Provenance and licensing
-
-REA is a separate upstream project; this repository is not affiliated with or an official REA plugin. Check the upstream project's license and documentation before using its optional integrations. This skill does not redistribute REA source or compiled tools.
