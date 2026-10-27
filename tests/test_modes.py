@@ -29,7 +29,7 @@ class ModeContractTests(unittest.TestCase):
         for token in ("G0", "G1", "G2", "G3", "G4"):
             self.assertIn(token, PROTOCOL)
         self.assertIn("Do not tune against the final test partition", PROTOCOL)
-        self.assertIn("not a successful benchmark reproduction", SKILL)
+        self.assertIn("never a successful benchmark reproduction", SKILL)
 
     def test_short_prompt_and_docs(self):
         self.assertIn("Short-prompt contract", SKILL)
