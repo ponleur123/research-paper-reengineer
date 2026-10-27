@@ -3,7 +3,7 @@ name: research-paper-reengineer
 description: Evidence-driven reconstruction of machine-learning research papers into testable implementations. Use when asked to reverse engineer, reproduce, implement, audit, or extend a paper or method using PDFs, equations, figures, supplementary material, GitHub repositories, model checkpoints, datasets, or compiled artifacts. Integrates REA (Reverse Engineer Anything) only when shipped artifacts or runtime evidence require it; emphasizes architecture specifications, claim-evidence traceability, PyTorch shape contracts, and reproduction testing. Especially useful for multi-view vision, BEV, 3D reconstruction, detection, and tracking.
 compatibility: Requires an agent able to read files and run Python. REA MCP/CLI is optional; PyTorch/NumPy and hardware are optional and needed only for implementation or numerical tests. Internet access may be needed to retrieve public papers or repositories.
 metadata:
-  version: "1.0.0"
+  version: "1.1.0"
   author: "Research Reconstruction Toolkit"
 ---
 
@@ -36,6 +36,26 @@ Choose the best available route, without installing tools unnecessarily:
 5. If only part of a paper can be reconstructed, deliver working partial results and name unresolved dependencies. Do not invent hidden implementation details or fabricated metrics.
 6. Favor minimal, executable PyTorch modules and deterministic tests over writing a large speculative end-to-end system.
 7. Never assert camera calibration is present/absent solely because a method uses BEV. Inspect actual projection operators and coordinate-frame contracts.
+
+## Operating modes (v1.1)
+
+Select one mode from the user's instructions; default to `analyze` for a request to explain a paper and `reconstruct` for a request to implement a specified component. A request to reproduce a paper's results selects `reproduce`. A request to do so **from the paper alone**, without access to original code or weights, selects `blind-reproduce`. An independent verification request selects `audit`.
+
+| Mode | Trigger examples | Required work and stopping criterion |
+|---|---|---|
+| `analyze` | "analyze this paper", "explain its architecture" | Paper, math, pipeline and evidence report; no speculative training requirement |
+| `reconstruct` | "reverse engineer this module", "implement this paper" | Trace permitted code/artifacts, produce testable independent modules, shape/mathematical tests and G0–G3 report where verifiable |
+| `reproduce` | "reproduce its results", "train and match this paper" | Complete runnable model/data/train/validate/evaluate/infer pipeline; real dataset, observed execution, benchmark comparison and G0–G4 accounting |
+| `blind-reproduce` | "paper-only", "assume no original repo", "independently train from the PDF" | Same runnable real-data workflow as `reproduce`, but **never inspect original or third-party paper-specific code, checkpoints, model weights or implementation tutorials during the blind phase** |
+| `audit` | "verify this reconstruction", "grade the reproduction" | Independently inspect implementation, rerun tests, introduce new/mutation tests, scrutinize claims, and report scope/limitations without trusting generated reports |
+
+**Short-prompt contract:** `Use research-paper-reengineer in blind-reproduce mode. Paper: <URL or PDF>.` is sufficient. Extract task, dataset and reported metric from the paper. Do not require a user to copy a multi-page workflow into the prompt. If a dataset, compute budget or artifact is missing, make a documented assumption or report the blocker; still deliver useful executable partial work.
+
+**Important mode override:** In `blind-reproduce`, Phase 2's normal repository crosswalk is **disabled** for original/third-party implementations, even if a repository is easy to find. Instead, derive the scientific specification from permitted paper sources, freeze decisions, run an independent implementation and train/test. Do not invoke REA on prohibited artifacts. Use [references/reproduction.md](references/reproduction.md) as the detailed execution and leakage-prevention contract.
+
+For `reproduce` and `blind-reproduce`, phases 4–6 expand beyond a minimal module: implement the **complete trainable model** and training/evaluation commands for the real paper dataset. Perform actual real-data smoke training, checkpoint save/reload, validation, and locked final held-out testing when time/resources permit. An incomplete full run is never a successful benchmark reproduction. Distinguish (a) architecture fidelity, (b) runnable training, (c) independent numerical reference parity, and (d) experimental metric comparability. G3 does not automatically pass in blind mode merely because the model trains or its shape tests pass; G4 requires an actual comparable training-and-evaluation run, not a plan.
+
+For `audit`, prefer independent fixtures and mutation tests, and audit actual logs, checkpoint files and provenance before accepting a claim. New tests must not silently modify the original implementation or retroactively tune reported tolerances.
 
 ## Workflow
 
@@ -140,5 +160,6 @@ Never say "exact replication" merely because it runs. If only paper-derived, rep
 - [references/rea-bridge.md](references/rea-bridge.md): conditional REA invocation and limitations.
 - [references/multiview-3d.md](references/multiview-3d.md): camera geometry, BEV, fusion and tracking validation.
 - [references/verification.md](references/verification.md): parity gates, numeric rigor, experiment protocol.
+- [references/reproduction.md](references/reproduction.md): full real-data training, blind protocol, holdout evaluation and acceptance gates.
 - `assets/`: case, evidence, architecture, test, and report templates.
 - `scripts/`: scaffold, safetensors header inspection, array comparison, evidence auditing.
