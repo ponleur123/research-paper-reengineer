@@ -24,6 +24,8 @@ When a request explicitly asks for paper-only reconstruction, use `blind-reprodu
 - Freeze a `reproduction-plan.md` before the final test evaluation; include a deviation register and a compute budget.
 - Never infer a missing optimizer, augmentation, kernel/padding convention, or training schedule from the paper's final metric alone.
 
+A **real dataset** means actual task-relevant records from the documented source, with provenance and licenses; synthetic samples are insufficient to claim reproduction.
+
 ## 2. Three execution stages (distinct statuses)
 
 ### A. Architecture and functional tests
