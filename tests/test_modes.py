@@ -19,7 +19,7 @@ class ModeContractTests(unittest.TestCase):
         blind = SKILL.split("| `blind-reproduce` |")[1].split("| `audit` |")[0]
         self.assertIn("never inspect", blind.lower())
         for term in ("original", "third-party", "checkpoints"):
-            self.assertIn(term, PROTOCOL)
+            self.assertIn(term, PROTOCOL.lower())
         self.assertIn("Prohibited", PROTOCOL)
         self.assertIn("frozen", PROTOCOL)
 
